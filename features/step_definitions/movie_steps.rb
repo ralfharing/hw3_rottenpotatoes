@@ -15,7 +15,7 @@ Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.content  is the entire content of the page as a string.
   regexp = Regexp.new(eval("/" + e1 + ".*" + e2 + "/im"))
-  page.body.match(regexp)
+  assert page.body.match(regexp)
 end
 
 # Make it easier to express checking or unchecking several boxes at once
@@ -35,10 +35,10 @@ Then /I should see (.*) of the movies/ do |all_or_none|
   if all_or_none == "all"
     # check the tr tags in the only table on the page and compare
     # against count of database records
-    page.has_css?("tbody tr", :count => Movie.all.count)
+    assert page.has_css?("tbody tr", :count => Movie.all.count)
   elsif all_or_none == "none"
     # check that the table contains no tr rows at all
-    not page.has_css?("tbdoy tr")
+    assert page.has_css?("tbody tr") == false
   else
     assert false, "Unimplemented"
   end
