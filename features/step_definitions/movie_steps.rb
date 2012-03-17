@@ -14,7 +14,8 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.content  is the entire content of the page as a string.
-  assert false, "Unimplmemented"
+  regexp = Regexp.new(eval("/" + e1 + ".*" + e2 + "/im"))
+  page.body.match(regexp)
 end
 
 # Make it easier to express checking or unchecking several boxes at once
